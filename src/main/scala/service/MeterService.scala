@@ -11,7 +11,7 @@ trait MeterService {
     val redisClient = new RedisClient("localhost", 6379)
     val fireBaseClient = new Firebase("https://blinding-heat-5589.firebaseio.com/")
     val executorService = Executors.newFixedThreadPool(4)
-    val executionContext = ExecutionContext.fromExecutorService(executorService)
+    implicit val executionContext = ExecutionContext.fromExecutorService(executorService)
 
     def stream_update(meterUUID: String, usage: Int) = Future {
         val currentUsage = redisClient.incrby(meterUUID, usage).get
